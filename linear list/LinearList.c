@@ -10,7 +10,7 @@ typedef struct {
 } ITEM;
 
 typedef struct {
-    ITEM A[MAX];
+    ITEM A[MAX+1]; // adding a last element for sentinel
     int numItems; // number of elements
 } LIST;
 
@@ -36,6 +36,15 @@ int linearSearch(LIST* l, KEYTYPE key){
         if(l->A[i].key == key) return i; // returns the position of the element
     }
     return -1;
+}
+
+int linearSearchWithSentinel(LIST* l, KEYTYPE key){
+    int i = 0;
+    // we're gonna add the key that we're searching to end of the list
+    l->A[l->numItems].key = key;
+    while (l->A[i].key != key) i++;
+    if(i == l->numItems) return -1;
+    else return i;
 }
 
 bool insertItem(LIST* l, ITEM i, int index){
